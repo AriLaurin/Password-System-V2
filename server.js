@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const serverRoutes = require("./routes/serverRoutes");
 const authRoutes = require("./routes/authRoutes");
+const nodemailer = require("nodemailer");
 const port = 80;
 const cookieParser = require("cookie-parser");
 const {requireAuth, checkUser} = require("./middleware/authMiddleware");
@@ -25,6 +26,32 @@ app.set("view engine", "ejs");
 const dbURI = process.env.host
 mongoose.set("strictQuery", false);
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true}); //these object options help prevent deprications
+
+// Nodemailer Routing
+let transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.MAIL_USERNAME,
+      pass: process.env.MAIL_PASSWORD,
+    },
+  });
+
+  let mailOptions = {
+    from: process.env.MAIL_USERNAME,
+    to: process.env.MAIL_USERNAME,
+    subject: 'Nodemailer Project',
+    text: 'Hi from your nodemailer project'
+  };
+
+  
+
+  transporter.sendMail(mailOptions, function(err, info) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Email sent successfully" + info.messageId);
+    }
+  });
 
 // Routes
 app.get("*", checkUser); // * means every route

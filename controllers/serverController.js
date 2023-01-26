@@ -10,3 +10,7 @@ module.exports.index_post = (req,res) => {
 module.exports.content_get = (req,res) => {
     res.render("content")
 }
+
+module.exports.forgotpass_get = (req,res) => {
+    res.render("forgotpass")
+}
