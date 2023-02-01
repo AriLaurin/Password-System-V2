@@ -95,10 +95,3 @@ module.exports.logout_get = (req,res) => {
     res.redirect("/"); //sends them to homepage on click
 
 }
-
-module.exports.newpass_get = (req,res) => {
-    res.render("newpass")
-}
-module.exports.newpass_post = (req,res) => {
-    res.render("new pass request")
-}

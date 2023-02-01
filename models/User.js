@@ -55,4 +55,4 @@ userSchema.statics.login = async function (email,password) { //we create a stati
                         //must be the singular of what we want to call our model. Mongoose reads this and pluralizes it
 const User = mongoose.model("user", userSchema) //using our new schema
 
-module.exports = User;
+module.exports = User, userSchema;

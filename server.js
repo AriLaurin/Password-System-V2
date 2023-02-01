@@ -8,7 +8,6 @@ const nodemailer = require("nodemailer");
 const port = 80;
 const cookieParser = require("cookie-parser");
 const {requireAuth, checkUser} = require("./middleware/authMiddleware");
-const {forgotpass_post} = require("./controllers/serverController");
 
 //calling upon express with app
 const app = express();
@@ -27,8 +26,6 @@ app.set("view engine", "ejs");
 const dbURI = process.env.host
 mongoose.set("strictQuery", false);
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true}); //these object options help prevent deprications
-
-
 
 // Routes
 app.get("*", checkUser); // * means every route

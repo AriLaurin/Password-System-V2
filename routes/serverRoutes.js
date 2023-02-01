@@ -10,6 +10,7 @@ router.get("/", serverController.index_get); //this will send the root view file
 router.get("/content", requireAuth, serverController.content_get);
 router.get("/forgotpass", serverController.forgotpass_get);
 router.post("/forgotpass", serverController.forgotpass_post);
-//make a get request to newpass with specific paramater key (email / _id)
+router.get("/newpass", serverController.newpass_get);
+router.post("/newpass", serverController.newpass_post);
 
 module.exports = router; //we export all the handlers of router into server so we can use these routes

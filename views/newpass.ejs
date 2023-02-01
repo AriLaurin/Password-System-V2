@@ -2,6 +2,40 @@
 
 <h1>new password page</h1>
 
+<form action="">
+    <label for="password">New Password</label>
+    <input type="text" name="password" required>
+</form>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+       const form = document.querySelector("form");
+
+       form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        let password = {password: form.password.value};
+        let href = window.location.href;
+        let email = href.slice(31,)
+
+        console.log(email);
+        console.log(password);
+
+        try{ 
+            const saveData = await fetch("/newpass", {
+                method: "POST",
+                body: JSON.stringify({newPassData: password}),
+                headers: {"Content-Type": "application/json"}
+            });
+            const newPassData = await saveData.json();
+            // console.log(newPassData);
+            
+        }
+        
+        catch(err){
+            console.log(err);
+        }
+        });
+</script>
 
 <%- include('partials/footer'); -%>
