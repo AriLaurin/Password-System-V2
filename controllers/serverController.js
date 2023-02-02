@@ -71,7 +71,7 @@ module.exports.newpass_post =  async (req,res) => {
 
 
   let password2 = password.password;
-  console.log(password2);
+  // console.log(password2);
   const salt = await bcrypt.genSalt(); //genSalt is async
   password2 = await bcrypt.hash(password2, salt);//this. refers to the current user being created
 
@@ -79,7 +79,7 @@ module.exports.newpass_post =  async (req,res) => {
 
   const update = { $set: password2};
 
-  console.log(email, password);
+  // console.log(email, password);
 
   User.findOne(email, function(error, result) {
     if (error) {
@@ -93,9 +93,7 @@ module.exports.newpass_post =  async (req,res) => {
           console.log(error)
         } else {
 
-          console.log("Document updated:", result);
-          console.log(password);
-          console.log("potet");
+          console.log("Document updated");
         }
       })
     }
