@@ -19,13 +19,6 @@ const userSchema = new mongoose.Schema({//object defines the structure of our us
     },
 });
 
-//fire a function after doc saved to db
-userSchema.post("save", function (doc, next){ //.post refers to after a save has been made, do something
-                                //grabs our saved doc
-    console.log("new user created and saved", doc);
-    next(); //next is used in custom middleware so the code knows to continue after this, else it would hang and nothing else would work
-});
-
 // fire a function before doc saved to db
 userSchema.pre("save", async function (next){ //.pre refers to before something happens, do something
     const salt = await bcrypt.genSalt(); //genSalt is async
@@ -34,6 +27,15 @@ userSchema.pre("save", async function (next){ //.pre refers to before something 
    // console.log("user about to be created and saved", this); //this refers to the user object that is created and saved before its actually sent to the db, which is why we want to use a normal function as well
     next();
 });
+
+//fire a function after doc saved to db
+userSchema.post("save", function (doc, next){ //.post refers to after a save has been made, do something
+                                //grabs our saved doc
+    console.log("new user created and saved", doc);
+    next(); //next is used in custom middleware so the code knows to continue after this, else it would hang and nothing else would work
+});
+
+
 
 //static method to login user
 userSchema.statics.login = async function (email,password) { //we create a static method and call it "login"

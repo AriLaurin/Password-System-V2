@@ -16,25 +16,24 @@
         e.preventDefault();
         let password = {password: form.password.value};
         let href = window.location.href;
-        let email = href.slice(31,)
+        let email = href.slice(href.indexOf("=")+1);
+        const emailJSON = {email: email};
 
-        console.log(email);
+        console.log(emailJSON);
         console.log(password);
 
-        try{ 
-            const saveData = await fetch("/newpass", {
-                method: "POST",
-                body: JSON.stringify({newPassData: password}),
-                headers: {"Content-Type": "application/json"}
-            });
-            const newPassData = await saveData.json();
-            // console.log(newPassData);
-            
-        }
-        
-        catch(err){
-            console.log(err);
-        }
+        try {
+    const result = await fetch("/newpass", {//endpoint we want to request to, options object
+        method: "POST", //we want to look for post request
+        body: JSON.stringify({ email: emailJSON, password: password}),  //the email and password the user is trying to sign up with
+        headers: { "Content-Type": "application/json" }
+    });
+    const data = await result.json(); //getting the data out of result
+    console.log(data);
+}
+catch(err){
+    console.log(err);
+}
         });
 </script>
 

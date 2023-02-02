@@ -2,6 +2,7 @@
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 module.exports.index_get = (req,res) => {
     res.render("index");
@@ -65,17 +66,38 @@ module.exports.forgotpass_post = (req,res) => {
 module.exports.newpass_get = (req,res) => {
   res.render("newpass")
 }
-module.exports.newpass_post = (req,res) => {
-  const {newPassData} = req.body;
+module.exports.newpass_post =  async (req,res) => {
+  const {email, password} = req.body;
 
-  console.log(newPassData);
 
-  // User.findOne(dataJSON, function(error, result) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     // process result
-  //     console.log(result);
-  //   }
-  // });
+  let password2 = password.password;
+  console.log(password2);
+  const salt = await bcrypt.genSalt(); //genSalt is async
+  password2 = await bcrypt.hash(password2, salt);//this. refers to the current user being created
+
+  password2 = {password: password2}
+
+  const update = { $set: password2};
+
+  console.log(email, password);
+
+  User.findOne(email, function(error, result) {
+    if (error) {
+      console.log(error);
+    } else {
+      const filter = email;
+      // process result
+      // console.log(result);
+      User.updateOne(filter, update, result, async function(error) {
+        if(error){
+          console.log(error)
+        } else {
+
+          console.log("Document updated:", result);
+          console.log(password);
+          console.log("potet");
+        }
+      })
+    }
+  });
 }
